@@ -6,32 +6,31 @@ app = FastAPI()
 def avaliar_humor(string: str) -> int:
     """
     Função para avaliar o humor de uma string.
-    
+
     Args:
         string (str): A string a ser avaliada.
-    
+
     Returns:
         int: O humor avaliado em uma escala de 1 a 10.
     """
     palavras_chave_positivas = [
       "feliz", "alegre", "amor", "ótimo", "adoro", "bom", "ótimo",
-      "maravilhoso", "boa", "Adoro"
+      "maravilhoso", "boa", "Adoro.+-"
       ]
     palavras_chave_negativas = [
       "raiva", "triste", "chateado", "frustrado", "irritado"
       ]
 
-    pontuacao = 5  # Inicialmente, pontuação neutra
+    pontuacao = 5
 
     for palavra in palavras_chave_positivas:
         if palavra in string:
-            pontuacao += 2  # Adiciona 2 pontos se uma palavra-chave positiva for encontrada
+            pontuacao += 2
 
     for palavra in palavras_chave_negativas:
         if palavra in string:
-            pontuacao -= 2  # Subtrai 2 pontos se uma palavra-chave negativa for encontrada
+            pontuacao -= 2
 
-    # Garantindo que a pontuação esteja dentro do intervalo de 1 a 10
     pontuacao = max(1, min(pontuacao, 10))
 
     return pontuacao
@@ -51,7 +50,7 @@ async def root():
     return {"message": "Hello World"}
 
 
-@app.get("/avaliar-humor/{texto}")
+@app.post("/avaliar-humor/{texto}")
 async def calcular_humor(texto: str):
     """
     Endpoint para calcular o humor de uma string.
